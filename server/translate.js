@@ -1,0 +1,1370 @@
+"use strict";var l=require("electron"),g=process;process.once("loaded",()=>{let c=e=>{l.ipcRenderer?.send("preload-script-error",e?.message)};try{window.global=window,global.process=g,window.ipc=l.ipcRenderer}catch(e){c(e)}try{let e=window.process.argv.find(t=>t.startsWith("--fiddler-zoom-factor="));e&&l.webFrame.setZoomFactor(parseFloat(e.substring(22)))}catch(e){c(e)}try{let e=document.cookie}catch{return}if(document.cookie||(document.cookie="FiddlerTestCookie=true; path=/"),!document.cookie){let e="__fiddler_file_cookies__";try{let t=new Date().getTime(),o=JSON.parse(localStorage.getItem(e)||"[]");for(let r=o.length-1;r>=0;r--){let i=o[r]?.key||"";if(!i.startsWith("_g")&&i!=="ssid")o.splice(r,1);else{let s=o[r]?.cookie?.indexOf("xpires=")+7;if(s!==6&&s<o[r].cookie.length){let n=o[r].cookie.indexOf(";",s+1),a=o[r].cookie.substring(s,n===-1?void 0:n);a&&new Date(a).getTime()<t&&o.splice(r,1)}}}localStorage.setItem(e,JSON.stringify(o))}catch(t){c(t)}document.__defineGetter__("cookie",()=>{let t=[];try{t=JSON.parse(localStorage.getItem(e)||"[]")}catch(o){c(o)}return t?t.map(o=>o.key+"="+o.value).join("; "):""}),document.__defineSetter__("cookie",t=>{let r=(t.indexOf(";")?t.substring(0,t.indexOf(";")):t).trim().split("=");if(r.length!==2)return;let i=r[0].trim(),s=r[1].trim();if(i?.startsWith("WZRK_"))return;let n=[];try{n=JSON.parse(localStorage.getItem(e)||"[]")}catch(d){c(d)}let a=n.findIndex(d=>d&&d.key===i);a!==-1?n[a]={key:i,value:s,cookie:t}:n.push({key:i,value:s,cookie:t}),localStorage.setItem(e,JSON.stringify(n))})}});
+(async () => {
+  console.info("-------Translation----------");
+  // 用于切换语言时更新
+  const node2keyword = new Map();
+  let lang = "zhCn";
+  const trnaslationData = {
+    zhCn: {
+      simple: {
+        '(Chrome or Edge by default) and route its traffic through Fiddler.': '(默认情况下为Chrome或Edge)并通过Fiddler路由其流量。',
+        'a new, clean independent Chromium-based instance': '一个新的、纯净的独立基于Chromium的实例',
+        'Additional Settings': '附加设置',
+        'Are you sure you want to clear all sessions from the Live Traffic grid? This will also': '您确定要清除实时流量网格中的所有会话吗？这也将从列表中',
+        'remove any opened sessions': '删除所有打开的会话',
+        'from the list.': '。',
+        'Automatically send data to help us improve the product': '自动发送数据以帮助我们改进产品',
+        'Automatically detect path to Google Chrome or Microsoft Edge': '自动检测到Google Chrome或Microsoft Edge的路径',
+        'Active Traffic Sources': '活动流量来源',
+        'Add File': '添加文件',
+        'Add New Rule': '添加新规则',
+        'Add to Snapshot': '添加到快照',
+        'Add to Compare Group': '添加到比较组',
+        'Add to Group 1': '添加到组 1',
+        'Add to Group 2': '添加到组 2',
+        'Add a .proto file from your local system. The .proto file will override the Server Reflection.': '从本地系统添加 .proto 文件。 .proto 文件将覆盖服务器反射。',
+        'Allow remote devices to connect': '允许远程设备连接',
+        'All Folders': '所有文件夹',
+        'All timestamps are in local time. Timestamps and durations marked with * are Fiddler-specific. For more information, check the': '所有时间戳均为本地时间。带有 * 标记的时间戳和持续时间是Fiddler特定的。欲了解更多信息，请查看',
+        'all these conditions': '所有这些条件',
+        'any of these conditions': '这些条件中的任何一个',
+        'any number of times': '任意次数',
+        'Appearance': '外观',
+        'Apply filters on captured traffic to narrow down the sessions that you need to see and work with.': '对捕获的流量应用过滤器，以缩小您需要查看和处理的会话范围。',
+        'Are you sure you want to delete this requests folder? All saved requests inside this folder will be deleted. Move them to other folders to preserve them.': '您确定要删除此请求文件夹吗？该文件夹内的所有已保存请求都将被删除。将它们移动到其他文件夹以保留它们。',
+        'Are you sure you want to delete this request?': '您确定要删除此请求吗？',
+        'At least one option must be selected to capture traffic.': '必须选择至少一个选项才能捕获流量。',
+        'Browse': '浏览',
+        'Browsers': '浏览器',
+        'Browser data': '浏览器数据',
+        'Bypass Fiddler for URLs that start with:': '绕过以...开头的URL的Fiddler代理:',
+        'Bypass': '绕过',
+        'Cancel': '取消',
+        'Capture all network traffic from your computer by setting Fiddler as your system proxy temporarily (some applications may not respect this setting).': '通过将Fiddler临时设置为系统代理，捕获计算机上的所有网络流量（某些应用程序可能不遵守此设置）。',
+        'Capture network traffic from remote devices such as iOS or Android devices, or remote computers.': '捕获来自远程设备（如iOS或Android设备）或远程计算机的网络流量。',
+        'Certificate valid': '证书有效',
+        'Changes here modify the cookie header.': '此处的更改会修改cookie头。',
+        'Changes here modify the URL query parameters.': '此处的更改会修改URL查询参数。',
+        'Child Requests': '子请求',
+        'Choose a folder to save the request': '选择一个文件夹来保存请求',
+        'Clean Browser': '纯净浏览器',
+        'Clear': '清除',
+        'Clear All': '全部清除',
+        'Clear All Sessions': '清除所有会话',
+        'Client IP': '客户端IP',
+        'Click on two sessions below to view difference': '点击下面的两个会话以查看差异',
+        'Compact': '紧凑',
+        'Compare': '比较',
+        'Compare Sessions': '比较会话',
+        'Copy': '复制',
+        'Comment': '注释',
+        'Columns': '列',
+        'Could not detect browser path. Please set it manually.': '无法检测到浏览器路径。请手动设置。',
+        'Composer enables you to create a new HTTP/S request from scratch and precisely define each parameter.': '构建器使您能够从头开始创建新的HTTP/S请求，并精确定义每个参数。',
+        'Copy all content to clipboard': '将所有内容复制到剪贴板',
+        'Create a Request': '创建请求',
+        'Create New Folder': '创建新文件夹',
+        'documentation': '文档',
+        'Decode gRPC traffic via Server Reflection.': '通过服务器反射解码gRPC流量。',
+        'Decode via .proto file.': '通过 .proto 文件解码。',
+        'Default': '默认',
+        'Default terminal:': '默认终端:',
+        'Delete Your Fiddler Account': '删除您的Fiddler账户',
+        'Delete Requests Folder': '删除请求文件夹',
+        'Delete Request': '删除请求',
+        'Dark': '深色',
+        'Do not show again': '不再显示',
+        'Duplicate Requests': '复制请求',
+        'Edit': '编辑',
+        'Edit in Composer': '在构建器中编辑',
+        'Enable': '启用',
+        'Enable HTTP/2 support': '启用HTTP/2支持',
+        'Enable Automatic Authentication': '启用自动身份验证',
+        'Enable Streaming mode': '启用流模式',
+        'Enable the System Proxy': '启用系统代理',
+        'Enter a comment to associate with the selected Sessions': '输入与所选会话关联的注释',
+        'Execute to get response': '执行以获取响应',
+        'Export': '导出',
+        'Find out more in': '了解更多信息请访问',
+        'Fiddler CA Certificate': 'Fiddler CA 证书',
+        'Fiddler listens on port': 'Fiddler 监听端口',
+        'Fiddler will automatically detect Server Reflection if available and decode gRPC messages.': '如果可用，Fiddler将自动检测服务器反射并解码gRPC消息。',
+        'Filter Traffic': '过滤流量',
+        'Filter individual columns or use the Filters dialog to create a precise filter with multiple conditions.': '过滤单个列或使用“过滤器”对话框创建具有多个条件的精确过滤器。',
+        'Follow redirects automatically': '自动跟随重定向',
+        'For more information, check the': '欲了解更多信息，请查看',
+        'Give your request a name': '为您的请求命名',
+        'How it Works?': '它是如何工作的？',
+        'However, there may be situations where the proxy is not removed successfully, which could result in the loss of internet connection.': '但是，可能会出现代理未成功移除的情况，这可能会导致互联网连接丢失。',
+        'If this happens, go to Settings and search for “proxy”. Go to Manual Proxy Setup, press “Edit” and disable the proxy.': '如果发生这种情况，请转到“设置”并搜索“代理”。转到“手动代理设置”，按“编辑”并禁用代理。',
+        'If this is not your intention, look at the': '如果这不是您的本意，请查看',
+        'additional options in the dropdown menu.': '下拉菜单中的其他选项。',
+        'Import': '导入',
+        'In the following tabs, you\'ll be able to choose which settings you want to import from Fiddler Classic to Fiddler Everywhere.': '在以下选项卡中，您可以选择要从Fiddler Classic导入到Fiddler Everywhere的设置。',
+        'Keep it ON after app restart': '应用重启后保持开启',
+        'Keep in mind that:': '请记住:',
+        'Everything you like to import should be': '您喜欢导入的所有内容都应标有',
+        'marked with a check.': '复选标记。',
+        'Learn more': '了解更多',
+        'Light': '浅色',
+        'Mark': '标记',
+        'matches in the current tab': '当前标签页中有 0 个匹配项',
+        'Manually create HTTP/S requests to test APIs.': '手动创建HTTP/S请求以测试API。',
+        'Manually choose path to browser': '手动选择浏览器路径',
+        'Method': '方法',
+        'Modify, block, redirect, and customize requests and responses, to simulate conditions for advanced debugging.': '修改、阻止、重定向和自定义请求和响应，以模拟高级调试条件。',
+        'MCP Output Sanitization is Enabled': '已启用 MCP 输出清理',
+        'MCP Output Sanitization is Disabled': '已禁用 MCP 输出清理',
+        'Next': '下一步',
+        'Network Capture': '网络捕获',
+        'No proxy': '无代理',
+        'No sessions to display.': '无会话显示。',
+        'No rules to display.': '没有可显示的规则。',
+        'none of these conditions': '这些条件都不',
+        'Note that this is just a brief overview of how to work with Filters. There are many additional settings and features you can use to customize your Filters and get the most out of the tool.': '请注意，这只是如何使用过滤器的简要概述。您可以使用许多其他设置和功能来自定义您的过滤器并充分利用该工具。',
+        'Note that this is just a brief overview of how to work with Composer. There are many additional settings and features you can use.': '请注意，这只是如何使用构建器的简要概述。您可以使用许多其他设置和功能。',
+        'On Save': '保存时',
+        'On Export': '导出时',
+        'On MCP Output': '在 MCP 输出时',
+        'Open': '打开',
+        'Open Browser': '打开浏览器',
+        'Open Filters Dialog': '打开过滤器对话框',
+        'Opened Port': '已打开端口',
+        'OK': '确定',
+        'Parent Request': '父请求',
+        'Persist data in a specific directory': '将数据保存在特定目录中',
+        'Please, select session(s) to display detailed information.': '请选择会话以显示详细信息。',
+        'Please, select one or more sessions to inspect or compare.': '请选择一个或多个会话进行检查或比较。',
+        'Please select the device you want to connect to Fiddler Everywhere': '请选择要连接到 Fiddler Everywhere 的设备',
+        'Please wait...': '请稍候...',
+        'Protocol': '协议',
+        'Protocol:': '协议：',
+        'Quickly capture network traffic from a clean independent automatically configured Chromium browser.': '快速捕获来自纯净独立自动配置的Chromium浏览器的网络流量。',
+        'Quickly capture network traffic in a clean, automatically configured terminal.': '快速捕获来自纯净自动配置终端的网络流量。',
+        'Redirects': '重定向',
+        'Refresh': '刷新',
+        'Replay': '重放',
+        'Request': '请求',
+        'Request Details': '请求详情',
+        'Request Headers': '请求头',
+        'Request Body': '请求体',
+        'Requests folder deleted.': '请求文件夹已删除。',
+        'Request deleted': '请求已删除',
+        'Response Headers': '响应头',
+        'Response Body': '响应体',
+        'Response Details': '响应详情',
+        'Remote IP': '远程IP',
+        'Remote Device': '远程设备',
+        'Resume Paused Sessions': '恢复已暂停的会话',
+        'Reuse Filters': '重用过滤器',
+        'Reverse Proxy': '反向代理',
+        'Sanitization': '清理',
+        'Saved Filters': '已保存的过滤器',
+        'Save Request': '保存请求',
+        'Save As ...': '另存为...',
+        'Save a Request': '保存请求',
+        'Save and organize your request in collections for future reuse and collaboration with the team.': '保存并组织您的请求以供将来重用和与团队协作。',
+        'Save and reuse previously created filters for better productivity.': '保存并重用以前创建的过滤器以提高生产力。',
+        'Set manual proxy configuration:': '设置手动代理配置:',
+        'Set Comment': '设置注释',
+        'Select': '选择',
+        'Select a session from the list to view difference here': '从列表中选择一个会话以在此处查看差异',
+        'Session State:': '会话状态:',
+        'Session ID:': '会话ID:',
+        'Select browser (supported for Chromium based browsers)': '选择浏览器（支持基于Chromium的浏览器）',
+        'Selection of the body': '选择正文的格式也',
+        'Settings > HTTPS > Ignore server certificate errors': '设置 > HTTPS > 忽略服务器证书错误',
+        'Snapshots folder deleted.': '快照文件夹已删除。',
+        'specific number of times': '特定次数',
+        'Start Capturing': '开始捕获',
+        'Status': '状态',
+        'Stop processing more rules': '停止处理更多规则',
+        'System': '系统',
+        'System proxy is disabled': '系统代理已禁用',
+        'System proxy is enabled': '系统代理已启用',
+        'format will also change': '会更改自动生成的',
+        'the auto-generated': 'content-type头。',
+        'content-type header.': ' ',
+        'Sessions list length:': '会话列表长度:',
+        'The Server Reflection might not work in cases where it\'s using TLS, due to certificate errors.': '在使用TLS的情况下，当证书错误时，服务器反射可能无法正常工作。',
+        'This option will launch': '此选项将启动',
+        'This operation changes the proxy settings for your active network connection. When you': '此操作会更改您活动网络连接的代理设置。当您在主界面中',
+        'switch off the toggle': '关闭开关',
+        'in the main interface or close the application,': '或关闭应用程序时，',
+        'the proxy is removed': '代理将被移除',
+        '.': '。',
+        'TLS Version': 'TLS 版本',
+        'To use a different Chromium-based browser (e.g., Opera, Brave, Vivaldi, etc.), update the default browser path in the Browsers tab within Settings.': '要使用不同的基于Chromium的浏览器（例如Opera、Brave、Vivaldi等），请在“设置”中的“浏览器”选项卡中更新默认浏览器路径。',
+        'Troubleshooting page': '故障排除页面',
+        'Trust CA Certificate. Enable HTTPS': '信任CA证书。启用HTTPS',
+        'Trust CA Certificate in the User Store': '在用户存储中信任CA证书',
+        'Trust CA Certificate in the Machine Store': '在机器存储中信任CA证书',
+        'Use system proxy (recommended)': '使用系统代理（推荐）',
+        'Using Fiddler CA Certificate': '正在使用Fiddler CA证书',
+        'What are Rules?': '规则是什么？',
+        'What will happen when the system proxy is enabled?': '启用系统代理时会发生什么？',
+        'What will happen when a terminal is opened?': '打开终端时会发生什么？',
+        'What will happen when a clean browser is opened?': '打开纯净浏览器时会发生什么？',
+        'What happens when the system proxy is enabled?': '启用系统代理时会发生什么？',
+        'You can now easily import your settings, filters and AutoResponder rules from Fiddler Classic.': '您现在可以轻松地从Fiddler Classic导入您的设置、过滤器和自动响应规则。',
+        'You can use a request from captured traffic and edit each parameter before reissuing it.': '您可以使用从捕获的流量中获取的请求，并在重新发出请求之前编辑每个参数。',
+        'You can import new settings from Fiddler Classic at any time by starting this wizard.': '您可以随时通过启动此向导从Fiddler Classic导入新设置。',
+        'You can ignore the certificate errors in': '您可以在以下位置忽略证书错误',
+        'Keep all sessions in the list': '将所有会话保留在列表中',
+        'Keep only last': '仅保留最后',
+        'sessions': '个会话',
+        'Tables density': '表格密度',
+        'Trial expires in': '试用期还剩',
+        'Theme': '主题',
+        'Use clean instance': '使用纯净实例',
+        'When to sanitize': '何时清理',
+        'Report an Issue': '报告问题',
+        'Traffic Sources:': '流量来源:',
+        'Feedback': '反馈',
+        'Contact Support': '联系支持',
+        'Background:': '背景：',
+        'Text Color:': '文字颜色:',
+        'Sample Text': '示例文本',
+        'Connections': '连接',
+        'MCP Server': 'MCP 服务器',
+        'Listens on port': '监听端口',
+        'Server URL': '服务器URL',
+        'API Key': 'API密钥',
+        'Generate': '生成',
+        'Configuration': '配置',
+        'Gateway': '网关',
+        'Rule Name': '规则名称',
+        'Conditions': '条件',
+        'Actions': '操作',
+        'Add Action': '添加操作',
+        'Sessions will be matched on Request.': '会话将根据请求进行匹配。',
+        'Privacy': '隐私',
+        'Help': '帮助',
+        'Settings': '设置',
+        'Unsubscribe from Emails': '取消订阅电子邮件',
+        'Actual Size': '实际大小',
+        'Zoom In': '放大',
+        'Zoom Out': '缩小',
+        'Tools': '工具',
+        'Certificate': '证书',
+        'AutoSave': '自动保存',
+        'Decode value': '解码值',
+        'Advanced Replay': '高级重放',
+        'Release Notes': '发行说明',
+        'Check for Updates': '检查更新',
+        'Forums': '论坛',
+        'Documentation': '文档',
+        'About': '关于',
+        'Privacy Center': '隐私中心',
+        'Keyboard Shortcuts': '键盘快捷键',
+        'Open Application Logs Folder': '打开应用日志文件夹',
+        'Trust CA Certificate': '信任CA证书',
+        'in the User Store': '在用户存储中',
+        'in the Machine Store': '在机器存储中',
+        'Export CA Certificate': '导出CA证书',
+        'Reset CA Certificate': '重置CA证书',
+        'Remove CA Certificate': '移除CA证书',
+        'Capture HTTPS traffic': '捕获HTTPS流量',
+        'Checking this option will mark': '选中此选项将标记当前',
+        'the action as final, meaning': '操作为最终操作，意味',
+        'any actions or rules that follow': '着后续的任何操作或规',
+        'will not be executed.': '则将不会被执行。',
+        'Ignore Server Certificate Errors (Unsafe)': '忽略服务器证书错误（不安全）',
+        'Ignore server certificate errors (unsafe)': '忽略服务器证书错误（不安全）',
+        'View': '视图',
+        'Select Previous Tab': '选择上一个标签页',
+        'Select Next Tab': '选择下一个标签页',
+        'Fiddler port is opened for remote': 'Fiddler端口已打开以供远程',
+        'devices to connect.': '设备连接。',
+        'Strikeout': '删除线',
+        'Red': '红色',
+        'Blue': '蓝色',
+        'Copper': '铜色',
+        'Green': '绿色',
+        'Orange': '橙色',
+        'Purple': '紫色',
+        'Unmark': '取消标记',
+        'Reset': '重置',
+        'Remove': '移除',
+        'Buy Now': '立即购买',
+        'Capture and Inspect Traffic': '捕获和检查流量',
+        'Set System Proxy': '设置系统代理',
+        'Open Clean Browser': '打开纯净浏览器',
+        'Open Terminal': '打开终端',
+        'Connect Remote Devices': '连接远程设备',
+        'Modify and Filter Traffic': '修改和过滤流量',
+        'Create Rules': '创建规则',
+        'Create Filters': '创建过滤器',
+        'API Testing': 'API 测试',
+        'Compose API Requests': '构建API请求',
+        'Import from Fiddler Classic': '从Fiddler Classic导入',
+        'Import Fiddler Classic Settings': '导入Fiddler Classic设置',
+        'Rules Disabled': '规则已禁用',
+        'There are no rules enabled.': '没有启用的规则。',
+        'No Active Breakpoints': '没有活动断点',
+        'There are no active breakpoints': '当前时刻没有活动的',
+        'at the moment.': '断点。',
+        'Disabled': '已禁用',
+        'To enable the option,': '要启用该选项，',
+        'click here': '请点击此处',
+        'General': '常规',
+        'Select folder': '选择文件夹',
+        'Advanced Settings': '高级设置',
+        'Save headers only': '仅保存头部',
+        'Apply filters when saving snapshots': '保存快照时应用过滤器',
+        'Do not clear the grid': '不要清除网格',
+        'Automatically save a snapshot and clear the grid every': '自动保存一个快照并清除网格，间隔时间为',
+        'min': '分钟', // 自动保存的设置界面
+        'The sessions will be saved in': '会话将保存在快照中，',
+        'the snapshot without the body.': '不包含正文。',
+        'Only the sessions currently': '只有在当前网格中可',
+        'visible in the grid will be saved': '见的会话将被保存在',
+        'in the snapshot. Filtered-out': '快照中。被过滤的会',
+        'sessions will not be included.': '话将不会被包含。保存',
+        'When a snapshot is saved, the': '快照时，网格将保持完整。',
+        'grid will remain intact. The next': '下一个自动保存的快照将',
+        'autosaved snapshot will only': '只包含新捕获的流量。',
+        'include newly captured traffic': ' ',
+        'by ID.': ' ',
+        'AutoSave allows a maximum duration': '自动保存允许的最长时间为',
+        'of': ' ',
+        '720 minutes': '720分钟',
+        '. To change it, you': '。要更改它，您必',
+        'must first disable AutoSave, adjust': '须先禁用自动保存，调整时',
+        'the time, and then re-enable it.': '间，然后重新启用它。',
+        'Manage Account': '管理账户',
+        'Manage Subscription': '管理订阅',
+        'Login Verified': '登录已验证',
+        'You have access to the Fiddler servers and': '您可以访问Fiddler服务器并且',
+        'are successfully logged in.': '已成功登录。',
+        'Machine IPs:': '机器IP：',
+        'Sign Out': '登出',
+        'Snapshots': '快照',
+        'Shared with Me': '与我共享',
+        'My Snapshots': '我的快照',
+        'AutoSaved': '自动保存',
+        'Live Traffic': '实时流量',
+        'Filters': '过滤器',
+        'System Proxy': '系统代理',
+        'Browser': '浏览器',
+        'Terminal': '终端',
+        'Overview': '概览',
+        'Inspectors': '检查器',
+        'Rules': '规则',
+        'Session Details': '会话详情',
+        'Protocol: ': '协议: ',
+        'Session State: ': '会话状态: ',
+        'Session ID: ': '会话ID: ',
+        'Add Rule': '添加规则',
+        'Add Group': '添加组',
+        'Promote': '提升',
+        'Demote': '降级',
+        'Duplicate': '复制',
+        'Delete': '删除',
+        'Requests': '请求',
+        'Composer': '构建器',
+        'The match state determines when': '匹配状态决定会话中',
+        'in the session your rule actions are': '您的规则操作何时执',
+        'executed.': '行。',
+        'Execute': '执行',
+        'Save': '保存',
+        'Show autogenerated headers': '显示自动生成的头部',
+        'Key': '名称',
+        'Value': '值',
+        'Description': '描述',
+        'Response': '响应',
+        'Preview': '预览',
+        'Name': '名称',
+        'Rename': '重命名',
+        'New Folder': '新建文件夹',
+        'Share': '分享',
+        'Duplicate Collection': '复制集合',
+        'Enter a name to save as a new filter': '输入名称以保存为新过滤器',
+        'Save the current filter': '保存当前过滤器',
+        'Duplicate the current filter': '复制当前过滤器',
+        'Revert Changes': '撤销更改',
+        'Delete this filter forever?': '永久删除此过滤器？',
+        'Clear all conditions?': '清除所有条件？',
+        'Filter name': '过滤器名称',
+        'Name is required!': '名称是必填项！',
+        'Yes': '是',
+        'No': '否',
+        'Clear All Conditions': '清除所有条件',
+        'Add Condition': '添加条件',
+        'Contains': '包含',
+        'Does not contain': '不包含',
+        'Is equal to': '等于',
+        'Is not equal to': '不等于',
+        'Starts with': '以...开头',
+        'Ends with': '以...结尾',
+        'Is empty': '为空',
+        'Is not empty': '不为空',
+        'Regular expression': '正则表达式',
+        'Close': '关闭',
+        'Apply': '应用',
+        'Reset Zoom': '重置缩放',
+        'A custom CA certificate is already installed and used by Fiddler.': '已安装自定义 CA 证书并被 Fiddler 使用。',
+        'A system policy that requires per-machine proxy settings has been detected. Fiddler may not be able to update system proxy unless run as Administrator.': '检测到需要每台机器代理设置的系统策略。除非以管理员身份运行，否则 Fiddler 可能无法更新系统代理。',
+        'A tunnel used for RPC traffic': '用于 RPC 流量的隧道',
+        'A tunnel used for SSE traffic': '用于 SSE 流量的隧道',
+        'A tunnel used for WebSocket traffic': '用于 WebSocket 流量的隧道',
+        'A tunnel used for gRPC traffic': '用于 gRPC 流量的隧道',
+        'AI Assistant': 'AI 助手',
+        'AI responses may be inaccurate.': 'AI 响应可能不准确。',
+        'Ack. Id': '确认 ID',
+        'Add URL encoded data in the form "key=value&key2=value2...': '以 "key=value&key2=value2..." 的形式添加 URL 编码数据',
+        'Add a Rule': '添加规则',
+        'Add a note (optional)': '添加备注（可选）',
+        'Add new rules with the': '使用以下功能添加新规则',
+        'Additionally, you can choose to import saved Filters by uploading .ffx files into the Rules tab.': '此外，您可以通过将 .ffx 文件上传到"规则"选项卡来选择导入已保存的过滤器。',
+        'Additionally, you can import any saved AutoResponder rules by directly uploading .farx or .saz files into the Rules tab.': '此外，您可以通过直接将 .farx 或 .saz 文件上传到"规则"选项卡来导入任何已保存的自动响应规则。',
+        'Advanced Settings.': '高级设置。',
+        'Alpha channel': 'Alpha 通道',
+        'Alternatively you can use online': '或者您可以使用在线',
+        'Always Trust.': '始终信任。',
+        'Application Access Denied': '拒绝应用访问',
+        'Are you sure you want to clear the current Filter Conditions and Search? Any unsaved changes will be lost.': '您确定要清除当前的过滤条件和搜索吗？任何未保存的更改都将丢失。',
+        'Are you sure you want to clear the current Filter Conditions? Any unsaved changes will be lost.': '您确定要清除当前的过滤条件吗？任何未保存的更改都将丢失。',
+        'Are you sure you want to delete these sessions? Sessions deleted from a snapshot cannot be restored.': '您确定要删除这些会话吗？从快照中删除的会话无法恢复。',
+        'Are you sure you want to delete this item?': '您确定要删除此项目吗？',
+        'As the Linux distributions use different approaches for trusting a certificate authority (CA),': '由于 Linux 发行版使用不同的方法来信任证书颁发机构（CA），',
+        'Ask AI': '询问 AI',
+        'Ask or generate content with AI': '使用 AI 询问或生成内容',
+        'Assistant': '助手',
+        'Authentication:': '身份验证：',
+        'AutoResponder': '自动响应器',
+        'AutoResponder Rules': '自动响应规则',
+        'Automatically save all sessions.': '自动保存所有会话。',
+        'Autosize All Columns': '自动调整所有列大小',
+        'Autosize This Column': '自动调整此列大小',
+        'Avatar': '头像',
+        'Below is a list of Fiddler Classic options available for import. Please select the ones you want to transfer to Fiddler Everywhere. The options can be found in the settings menu in Fiddler Everywhere.': '以下是可供导入的 Fiddler Classic 选项列表。请选择您要转移到 Fiddler Everywhere 的选项。这些选项可以在 Fiddler Everywhere 的设置菜单中找到。',
+        'Blue channel': '蓝色通道',
+        'Body Size': '正文大小',
+        'Bottom toolbar': '底部工具栏',
+        'Break Request': '中断请求',
+        'Breakpoints Active': '断点已激活',
+        'Browser or Terminal Option': '浏览器或终端选项',
+        'Build Type:': '构建类型：',
+        'Built:': '构建日期：',
+        'Caching': '缓存',
+        'Calls appear here automatically when Fiddler captures agent traffic from your application. Go to Live Traffic to start capturing.': '当 Fiddler 从您的应用程序捕获代理流量时，调用会自动显示在这里。转到"实时流量"开始捕获。',
+        'Cancel changes': '取消更改',
+        'Capture traffic to see the Rules in action.': '捕获流量以查看规则的运行效果。',
+        'Certificate errors are ignored.': '证书错误将被忽略。',
+        'Change Password': '更改密码',
+        'Change color format': '更改颜色格式',
+        'Change the appearance depending on your OS theme': '根据您的操作系统主题更改外观',
+        'Check all': '全选',
+        'Choose Color': '选择颜色',
+        'Choose a folder (Optional)': '选择一个文件夹（可选）',
+        'Choose color': '选择颜色',
+        'Choose the columns shown in the session grid.': '选择在会话网格中显示的列。',
+        'Chunk progressbar': '分块进度条',
+        'Circular progressbar': '环形进度条',
+        'Clear All Filters': '清除所有过滤器',
+        'Clear all filters': '清除所有过滤器',
+        'Clear grouping': '清除分组',
+        'Clear sorting': '清除排序',
+        'Clear value': '清除值',
+        'Click': '点击',
+        'Click on': '点击',
+        'Client HTTP Version': '客户端 HTTP 版本',
+        'Client Port': '客户端端口',
+        'Client Protocol': '客户端协议',
+        'Client TLS Version': '客户端 TLS 版本',
+        'Closed Port': '已关闭端口',
+        'Cloud Storage': '云存储',
+        'Collaborate with your team': '与您的团队协作',
+        'Collapse Details': '收起详情',
+        'Collapse Group': '收起组',
+        'Collapse message': '收起消息',
+        'Color preview': '颜色预览',
+        'Colorgradient no color chosen': '渐变未选择颜色',
+        'Colorpalette no color chosen': '调色板未选择颜色',
+        'Colorpicker no color chosen': '拾色器未选择颜色',
+        'Command Menu': '命令菜单',
+        'Configuration applied': '配置已应用',
+        'Configurations Applied': '已应用的配置',
+        'Configure Fiddler': '配置 Fiddler',
+        'Configure Proxy > Manual.': '配置代理 > 手动。',
+        'Configure Reverse Proxy': '配置反向代理',
+        'Configure the Device': '配置设备',
+        'Confirm Choice': '确认选择',
+        'Connected': '已连接',
+        'Connected through upstream proxy': '通过上游代理连接',
+        'Connection restored successfully.': '连接已成功恢复。',
+        'Consider switching to': '考虑切换到',
+        'Contact your system admin for more information.': '请联系您的系统管理员以获取更多信息。',
+        'Contrast ratio': '对比度',
+        'Cookies': 'Cookies',
+        'Copy raw data': '复制原始数据',
+        'Create New Collection': '创建新集合',
+        'Current User': '当前用户',
+        'Cursor': 'Cursor',
+        'Custom CA Certificate and HTTPS': '自定义 CA 证书和 HTTPS',
+        'Data source:': '数据源：',
+        'Data table': '数据表',
+        'Date tab': '日期选项卡',
+        'Dayperiod': '时段',
+        'Debugging Assistant': '调试助手',
+        'Decrease value': '减小值',
+        'Decrement': '递减',
+        'Delete this filter': '删除此过滤器',
+        'Desktop': '桌面',
+        'Details': '详情',
+        'Disable': '禁用',
+        'Disable the others': '禁用其他',
+        'Disconnected': '已断开连接',
+        'Do you want to overwrite it?': '您要覆盖它吗？',
+        'Domain': '域',
+        'Domain:': '域：',
+        'Double-click on the downloaded certificate and click on': '双击下载的证书并点击',
+        'Double-click on the downloaded certificate to install it. It will automatically install with the Keychain App.': '双击下载的证书进行安装。它将自动通过"钥匙串访问"应用安装。',
+        'Download CA Certificate': '下载 CA 证书',
+        'Download CA Certificate step in "Remote Devices" wizard': '"远程设备"向导中的下载 CA 证书步骤',
+        'Download all': '全部下载',
+        'Downloading content for session in progress (the response is being read from the server)': '正在下载会话内容（正在从服务器读取响应）',
+        'Downloading paused for session in progress': '会话下载已暂停',
+        'Drag a column header and drop it here to group by that column': '拖动列标题并将其放在此处以按该列分组',
+        'Drag and drop files here to upload': '将文件拖放到此处以上传',
+        'Drag row': '拖动行',
+        'Drop files here to select': '将文件放在此处以选择',
+        'Drop files here to upload': '将文件放在此处以上传',
+        'Duration': '持续时间',
+        'During the trial you can:': '在试用期间您可以：',
+        'ENTERPRISE': '企业版',
+        'Edit this Column': '编辑此列',
+        'Enable now.': '立即启用。',
+        'Enable the manual proxy.': '启用手动代理。',
+        'Encryption': '加密',
+        'Encryption Method': '加密方法',
+        'Ensure': '确保',
+        'Enter Password': '输入密码',
+        'Enter host': '输入主机',
+        'Enter port': '输入端口',
+        'Enter the following information:': '输入以下信息：',
+        'Enter your': '输入您的',
+        'Event': '事件',
+        'Everywhere that requires an': '所有需要',
+        'Excel Export': 'Excel 导出',
+        'Expand': '展开',
+        'Expand Details': '展开详情',
+        'Expand Group': '展开组',
+        'Expand message': '展开消息',
+        'Expand the': '展开',
+        'Expired Offline License file detected. Please replace it <a href="open-offline-license-folder">here</a> and restart your app.': '检测到已过期的离线许可证文件。请<a href="open-offline-license-folder">在此处</a>替换它并重新启动应用。',
+        'Expires': '过期时间',
+        'Export CA Certificate to Desktop to install and trust it manually.': '将 CA 证书导出到桌面以手动安装和信任。',
+        'Export captured traffic': '导出捕获的流量',
+        'Export the CA Certificate with the button below and read how to install it': '使用下面的按钮导出 CA 证书并阅读如何安装它',
+        'Extensions': '扩展',
+        'Fiddler Everywhere enables you to export its CA Certificate and manually import it into your Linux OS.': 'Fiddler Everywhere 允许您导出其 CA 证书并手动导入到您的 Linux 操作系统。',
+        'Fiddler Wizards': 'Fiddler 向导',
+        'Fiddler caused a change to the': 'Fiddler 导致更改了',
+        'Fiddler is migrating to the unified Telerik system for account and subscription management.': 'Fiddler 正在迁移到统一的 Telerik 系统以进行账户和订阅管理。',
+        'Fiddler is migrating to the unified Telerik system for subscription management.': 'Fiddler 正在迁移到统一的 Telerik 系统以进行订阅管理。',
+        'FiddlerRootCertificate.crt.': 'FiddlerRootCertificate.crt。',
+        'File actions': '文件操作',
+        'File failed to upload.': '文件上传失败。',
+        'File size too large.': '文件太大。',
+        'File size too small.': '文件太小。',
+        'File successfully uploaded.': '文件上传成功。',
+        'File type not allowed.': '不允许的文件类型。',
+        'Filter': '过滤',
+        'Filter additionally by PID or process name': '按 PID 或进程名称额外过滤',
+        'Filter by': '过滤条件',
+        'Filters are active.': '过滤器已激活。',
+        'Filters are active. Please clear filters to see all data.': '过滤器已激活。请清除过滤器以查看所有数据。',
+        'Find your': '找到您的',
+        'Fingerprints': '指纹',
+        'Finish': '完成',
+        'Flatcolorpicker no color chosen': '平面拾色器未选择颜色',
+        'For Android Emulator': '对于 Android 模拟器',
+        'For Linux distributions': '对于 Linux 发行版',
+        'For answers': '获取答案',
+        'For answers and help': '获取答案和帮助',
+        'For iOS Simulator': '对于 iOS 模拟器',
+        'For previous Android versions, you might have to touch and hold the name of the connected network, then tap': '对于以前的 Android 版本，您可能需要长按已连接网络的名称，然后点击',
+        'For urgent and/or technical matters, please use the': '对于紧急和/或技术问题，请使用',
+        'Generated with AI': '由 AI 生成',
+        'Go to': '前往',
+        'Go to the first page': '转到第一页',
+        'Go to the last page': '转到最后一页',
+        'Go to the next page': '转到下一页',
+        'Go to the previous page': '转到上一页',
+        'Gradient view': '渐变视图',
+        'Green channel': '绿色通道',
+        'Group': '组',
+        'Group 1': '组 1',
+        'Group 2': '组 2',
+        'Group by': '分组依据',
+        'Group panel': '分组面板',
+        'HTTP(S), HTTP/2, WebSocket, and gRPC': 'HTTP(S)、HTTP/2、WebSocket 和 gRPC',
+        'HTTPS': 'HTTPS',
+        'HTTPS capture is disabled.': 'HTTPS 捕获已禁用。',
+        'Have limited or no internet access?': '网络访问受限或无法访问？',
+        'Headers': '请求头',
+        'Host name mismatch': '主机名不匹配',
+        'Host:': '主机：',
+        'Hover over the dots to view timing information. Expand the pane to reveal the labels.': '将鼠标悬停在点上以查看时序信息。展开面板以显示标签。',
+        'HttpOnly': 'HttpOnly',
+        'IP Address': 'IP 地址',
+        'If the below option is not checked, remote connections will be disabled by default after quitting the app. Please see what are the security risks': '如果未选中以下选项，则在退出应用后默认禁用远程连接。请查看安全风险',
+        'If the errors persist, please reach out to our': '如果错误仍然存在，请联系我们的',
+        'If the problem persists': '如果问题仍然存在',
+        'If the problem persists, please reach out to our': '如果问题仍然存在，请联系我们的',
+        'If this happens, go to Settings > Network and select the current network. Press Details... and select Proxies. Verify that Web Proxy (HTTP) and Secure Web Proxy (HTTPS) are disabled.': '如果发生这种情况，请转到"设置">"网络"并选择当前网络。按"详情..."并选择"代理"。验证"Web 代理（HTTP）"和"安全 Web 代理（HTTPS）"已禁用。',
+        'If you believe this is an error,': '如果您认为这是错误，',
+        'If you change the header and there is a filter applied for it, the filter will remain set.': '如果您更改了头部并且已对其应用了过滤器，则过滤器将保持不变。',
+        'If you do not want to ignore certificate errors,': '如果您不想忽略证书错误，',
+        'If you have': '如果您有',
+        'If you have restrictions setting a system proxy to your computer you can use our': '如果您的计算机在设置系统代理时受到限制，您可以使用我们的',
+        'If you sign in with another account, you will lose all unsaved data.': '如果您使用其他账户登录，您将丢失所有未保存的数据。',
+        'If you want to ignore certificate errors,': '如果您想忽略证书错误，',
+        'Ignore the following headers (semicolon separated):': '忽略以下头部（分号分隔）：',
+        'Important :': '重要：',
+        'In this dialog, you can enable and disable this mode.': '在此对话框中，您可以启用和禁用此模式。',
+        'Increase value': '增加值',
+        'Increment': '递增',
+        'Inspect multiple protocols, including': '检查多种协议，包括',
+        'Inspect traffic from remote devices': '检查来自远程设备的流量',
+        'Install': '安装',
+        'Install CA Certificate': '安装 CA 证书',
+        'Install Certificate.': '安装证书。',
+        'Install and trust the Fiddler CA Certificate. This<br> will also enable the "HTTPS traffic" option.': '安装并信任 Fiddler CA 证书。这<br>还将启用"HTTPS 流量"选项。',
+        'Install the downloaded CA Certificate in the device certificate storage. The settings location depends on the Android version but is usually located under': '将下载的 CA 证书安装到设备证书存储中。设置位置取决于 Android 版本，但通常位于',
+        'Instructions for Capturing and Inspecting iOS Device': '捕获和检查 iOS 设备的说明',
+        'Interested in using Fiddler Everywhere offline?': '有兴趣离线使用 Fiddler Everywhere 吗？',
+        'Invalid Custom CA Certificate': '无效的自定义 CA 证书',
+        'Is False': '为假',
+        'Is True': '为真',
+        'Is after': '在之后',
+        'Is after or equal to': '在之后或等于',
+        'Is before': '在之前',
+        'Is before or equal to': '在之前或等于',
+        'Is greater than': '大于',
+        'Is greater than or equal to': '大于或等于',
+        'Is less than': '小于',
+        'Is less than or equal to': '小于或等于',
+        'Is not null': '不为空',
+        'Is null': '为空',
+        'Issued By': '颁发者',
+        'Issued To': '颁发给',
+        'It currently supports capturing traffic from cURL, Node.js and Python out of the box': '它目前支持开箱即用地捕获来自 cURL、Node.js 和 Python 的流量',
+        'It looks like Fiddler Classic is still open. To import your latest changes, please close the app and then proceed with the import.': 'Fiddler Classic 似乎仍在打开状态。要导入您的最新更改，请关闭该应用，然后继续导入。',
+        'It looks like you are unable to capture traffic. You might have a configuration issue - check our': '您似乎无法捕获流量。您可能存在配置问题 - 请查看我们的',
+        'It seems like you still have some': '您似乎还有一些',
+        'It seems like your current selection contains': '您当前的选择似乎包含',
+        'It seems that': '似乎',
+        'It seems that there are no filters to import from Fiddler Classic.': '似乎没有可从 Fiddler Classic 导入的过滤器。',
+        'It seems that there are no quick filters to import from Fiddler Classic.': '似乎没有可从 Fiddler Classic 导入的快速过滤器。',
+        'It seems that there are no rules to import from Fiddler Classic.': '似乎没有可从 Fiddler Classic 导入的规则。',
+        'It works on a lower level and can capture all HTTP(S) traffic no matter the limitations of different frameworks, applications, and OSes.': '它在较低级别工作，可以捕获所有 HTTP(S) 流量，无论不同框架、应用程序和操作系统的限制如何。',
+        'Keychain App': '钥匙串访问',
+        'Keywords': '关键词',
+        'Learn more on our website.': '在我们的网站上了解更多信息。',
+        'Left Panel Navigation - Home, Traffic and Composer.': '左侧面板导航 - 主页、流量和构建器。',
+        'Load more...': '加载更多...',
+        'Loading': '加载中',
+        'Local Machine': '本地计算机',
+        'Local Storage': '本地存储',
+        'Log in with another email': '使用其他电子邮件登录',
+        'Looks like enabling HTTPS capture was unsuccessful.': '启用 HTTPS 捕获似乎未成功。',
+        'Looks like installing the CA certificate was unsuccessful.': '安装 CA 证书似乎未成功。',
+        'Looks like setting a proxy was unsuccessful.': '设置代理似乎未成功。',
+        'Looks like there was a problem while opening the browser.': '打开浏览器时似乎出现了问题。',
+        'Looks like there was a problem while opening the terminal.': '打开终端时似乎出现了问题。',
+        'Make sure': '确保',
+        'Make sure you have access to the following APIs:': '确保您可以访问以下 API：',
+        'Manage Sharing': '管理共享',
+        'Manual Proxy.': '手动代理。',
+        'Match sessions by:': '匹配会话条件：',
+        'Max-Age': '最大有效期',
+        'Maximize': '最大化',
+        'Menu Actions': '菜单操作',
+        'Message': '消息',
+        'Message Type': '消息类型',
+        'Message decoded via': '消息已解码，方式：',
+        'Message list': '消息列表',
+        'Message not decoded.': '消息未解码。',
+        'Migrate Your Subscription': '迁移您的订阅',
+        'Migrate Your Subscription!': '迁移您的订阅！',
+        'Millisecond': '毫秒',
+        'Minimize': '最小化',
+        'Minute': '分钟',
+        'Miscellaneous': '杂项',
+        'Mobile': '移动设备',
+        'Model': '模型',
+        'Model Configuration': '模型配置',
+        'Model Connection Required': '需要模型连接',
+        'Model name cannot contain whitespace or commas.': '模型名称不能包含空格或逗号。',
+        'Modify': '修改',
+        'Modify traffic with Rules and Breakpoints': '使用规则和断点修改流量',
+        'More Actions': '更多操作',
+        'More info...': '更多信息...',
+        'More tools': '更多工具',
+        'Move as next': '移到下一个',
+        'Move as previous': '移到上一个',
+        'My API Key': '我的 API 密钥',
+        'MyRuleset': '我的规则集',
+        'NO DATA FOUND': '未找到数据',
+        'NO administrative limitations or security policies.': '没有管理限制或安全策略。',
+        'Namespace': '命名空间',
+        'Navigate to next view': '导航到下一个视图',
+        'Navigate to parent view': '导航到父视图',
+        'Navigate to previous view': '导航到上一个视图',
+        'Network Capture Settings': '网络捕获设置',
+        'Next Tab': '下一个标签页',
+        'Next item': '下一项',
+        'Next save in': '下次保存于',
+        'No Active Directory (AD) account found. You need an AD email to use offline mode.': '未找到 Active Directory (AD) 账户。您需要 AD 电子邮件才能使用离线模式。',
+        'No content loaded': '未加载内容',
+        'No data to display.': '无数据显示。',
+        'No more subfolders': '没有更多子文件夹',
+        'No need to delete a rule': '无需删除规则',
+        'No notifications': '无通知',
+        'No records available.': '无可用记录。',
+        'Not Available': '不可用',
+        'Not Sorted': '未排序',
+        'Not modified': '未修改',
+        'Note that you should use the': '请注意，您应该使用',
+        'Note:': '注意：',
+        'Notification date: N/A': '通知日期：不适用',
+        'Offline License file.': '离线许可证文件。',
+        'Offline Mode': '离线模式',
+        'Offline Mode.': '离线模式。',
+        'On Proxy, select': '在代理上，选择',
+        'On the next step, it is important to select a specific location to place the CA. Select': '在下一步中，选择放置 CA 的特定位置很重要。选择',
+        'On your iOS device, go to': '在您的 iOS 设备上，前往',
+        'Once deleted, it will be permanently removed from the app and any caching will be stopped.': '一旦删除，它将从应用中永久移除，并且任何缓存都将停止。',
+        'Once you set up a model configuration, the': '设置模型配置后，',
+        'Open Settings.': '打开设置。',
+        'Open the': '打开',
+        'Open your': '打开您的',
+        'Opens the Network Capture Settings dialog': '打开网络捕获设置对话框',
+        'Operation is successful. Data is:': '操作成功。数据为：',
+        'Operators': '运算符',
+        'Optional': '可选',
+        'Options': '选项',
+        'Options list': '选项列表',
+        'Organize Rules': '组织规则',
+        'Organize your rules in groups for easier activation, deactivation, and simultaneous execution of multiple rules.': '将规则分组以便更轻松地激活、停用和同时执行多个规则。',
+        'Output': '输出',
+        'PDF Export': 'PDF 导出',
+        'Packet Type': '数据包类型',
+        'Page Number': '页码',
+        'Palette view': '调色板视图',
+        'Params': '参数',
+        'Partial content': '部分内容',
+        'Partners': '合作伙伴',
+        'Parts of the session to sanitize': '要清理的会话部分',
+        'Pause': '暂停',
+        'Paused': '已暂停',
+        'Please add a valid email': '请添加有效的电子邮件',
+        'Please confirm': '请确认',
+        'Please contact': '请联系',
+        'Please note that according to our': '请注意，根据我们的',
+        'Please read the end user license agreement below carefully and accept it to proceed.': '请仔细阅读以下最终用户许可协议并接受以继续。',
+        'Please type your feedback in the box below.': '请在下面的框中输入您的反馈。',
+        'Please, select a single Session to inspect or': '请选择单个会话进行检查或',
+        'Please, select a single Session to inspect or add the selected sessions to comparison groups:': '请选择单个会话进行检查或将选定的会话添加到比较组：',
+        'Port:': '端口：',
+        'Preserve Host': '保留主机',
+        'Press': '按',
+        'Press OK': '按确定',
+        'Press the': '按',
+        'Previous Tab': '上一个标签页',
+        'Previous item': '上一项',
+        'Proceed': '继续',
+        'Process': '进程',
+        'Profile Details': '配置文件详情',
+        'Progress Software or its': 'Progress Software 或其',
+        'Progressbar': '进度条',
+        'Prompt suggestions': '提示建议',
+        'Protobuf': 'Protobuf',
+        'Provider': '提供商',
+        'Proxies': '代理',
+        'Proxy Settings.': '代理设置。',
+        'Public Key': '公钥',
+        'Quick Filters': '快速过滤器',
+        'Reactivate today, subscribing takes 90 seconds!': '今天重新激活，订阅只需 90 秒！',
+        'Read Less': '收起',
+        'Read More': '阅读更多',
+        'Reauthenticate': '重新验证',
+        'Red channel': '红色通道',
+        'Regexes': '正则表达式',
+        'Remote HTTP Version': '远程 HTTP 版本',
+        'Remote Host': '远程主机',
+        'Remote Protocol': '远程协议',
+        'Remote TLS Version': '远程 TLS 版本',
+        'Remote connections are enabled': '远程连接已启用',
+        'Remove Password': '移除密码',
+        'Remove file': '移除文件',
+        'Remove reply': '移除回复',
+        'Remove the upstream proxy from OS settings and restart the app.': '从操作系统设置中移除上游代理并重新启动应用。',
+        'Remove this Column': '移除此列',
+        'Repeat Behavior': '重复行为',
+        'Repeat, Edit and Compose requests': '重复、编辑和构建请求',
+        'Represents a generic successful response': '表示通用的成功响应',
+        'Request Date': '请求日期',
+        'Request Time': '请求时间',
+        'Requests Behavior': '请求行为',
+        'Reset Filters': '重置过滤器',
+        'Reset to Default': '恢复默认',
+        'Resets all filters applied': '重置所有已应用的过滤器',
+        'Restore': '恢复',
+        'Resume': '恢复',
+        'Retry': '重试',
+        'Revert selection': '还原选择',
+        'Rule Builder': '规则构建器',
+        'Rules Enabled': '规则已启用',
+        'Rules Modified': '规则已修改',
+        'Rules are a powerful way to': '规则是一种强大的方式，可以',
+        'Rules are executed in the order of appearance.': '规则按出现顺序执行。',
+        'Rules can be applied to new incoming traffic, as well as on saved and shared sessions.': '规则可以应用于新的传入流量，以及已保存和共享的会话。',
+        'Safari': 'Safari',
+        'SameSite': 'SameSite',
+        'Save all sessions.': '保存所有会话。',
+        'Save current filter': '保存当前过滤器',
+        'Save visible sessions only': '仅保存可见会话',
+        'Saved in the Cloud.': '已保存到云端。',
+        'Saved in the cloud.': '已保存到云端。',
+        'Scheme': '方案',
+        'Scroll left': '向左滚动',
+        'Scroll right': '向右滚动',
+        'Scroll to the bottom and choose': '滚动到底部并选择',
+        'Search and Filter requests': '搜索和过滤请求',
+        'Search...': '搜索...',
+        'Second': '秒',
+        'Secure': '安全',
+        'Secure Web Proxy (HTTPS)': '安全 Web 代理（HTTPS）',
+        'See all release notes online...': '在线查看所有发行说明...',
+        'See the migration steps.': '查看迁移步骤。',
+        'Seems like you do not have a connection to': '您似乎没有连接到',
+        'Seems like you do not have a connection to our servers. Please, restore the network connectivity to:': '您似乎没有连接到我们的服务器。请恢复网络连接至：',
+        'Select All': '全选',
+        'Select All Rows': '选择所有行',
+        'Select Row': '选择行',
+        'Select a Snapshot to add the selected sessions to.': '选择要将选定会话添加到的快照。',
+        'Select a model from the list, or add one by typing its name.': '从列表中选择一个模型，或通过输入其名称添加一个模型。',
+        'Select all': '全选',
+        'Select all rows': '选择所有行',
+        'Select color': '选择颜色',
+        'Select decoding option:': '选择解码选项：',
+        'Select default terminal': '选择默认终端',
+        'Select files': '选择文件',
+        'Select files...': '选择文件...',
+        'Select now': '立即选择',
+        'Select page': '选择页面',
+        'Select row': '选择行',
+        'Select session': '选择会话',
+        'Selected': '已选择',
+        'Selected fields are visible': '选定的字段可见',
+        'Selection can be applied only when cell selection mode is enabled.': '仅当启用单元格选择模式时才能应用选择。',
+        'Selection can be applied only when row selection mode is enabled.': '仅当启用行选择模式时才能应用选择。',
+        'Selection can be applied only when the Grid selectable option is enabled.': '仅当启用网格可选选项时才能应用选择。',
+        'Send...': '发送...',
+        'Sender': '发送者',
+        'Server:': '服务器：',
+        'Session State': '会话状态',
+        'Sessions Count': '会话数量',
+        'Set Column Position': '设置列位置',
+        'Set Password': '设置密码',
+        'Set hue': '设置色调',
+        'Set opacity': '设置透明度',
+        'Set time': '设置时间',
+        'Settings > Security > Encryption and Credentials > Install a certificate > CA Certificate.': '设置 > 安全 > 加密和凭据 > 安装证书 > CA 证书。',
+        'Settings > WiFi.': '设置 > WiFi。',
+        'Settings app > General > About > Certificate Trust Settings': '设置应用 > 通用 > 关于 > 证书信任设置',
+        'Settings app > Profile Downloaded': '设置应用 > 已下载的描述文件',
+        'Settings.': '设置。',
+        'Share Collection': '共享集合',
+        'Share Rules': '共享规则',
+        'Share Snapshot': '共享快照',
+        'Shared Collections': '共享集合',
+        'Shared Resources Are Not Allowed': '不允许共享资源',
+        'Shared Rulesets': '共享规则集',
+        'Shared Snapshots': '共享快照',
+        'Sharing an encrypted session. Users will require the password to access it.': '正在共享加密的会话。用户需要密码才能访问。',
+        'Show URL': '显示 URL',
+        'Sign in via Web Browser': '通过 Web 浏览器登录',
+        'Sign in with a different account': '使用其他账户登录',
+        'Signature canvas': '签名画布',
+        'Snapshot #1': '快照 #1',
+        'Snapshot #2': '快照 #2',
+        'Something Went Wrong': '出现错误',
+        'Sort Ascending': '升序排序',
+        'Sort Descending': '降序排序',
+        'Sort by': '排序依据',
+        'Sortable': '可排序',
+        'Sorted Ascending': '已升序排序',
+        'Sorted Descending': '已降序排序',
+        'Source': '来源',
+        'Specify multiple conditions and apply complex filtering to sessions.': '指定多个条件并对会话应用复杂过滤。',
+        'Speech to Text': '语音转文字',
+        'Start Menu': '开始菜单',
+        'Start a conversation with the Debugging Assistant': '与调试助手开始对话',
+        'Status Code': '状态码',
+        'Stick': '固定',
+        'Subnet Mask': '子网掩码',
+        'Successfully connected to the model.': '已成功连接到模型。',
+        'Switch ON': '打开',
+        'System Roots': '系统根证书',
+        'System Settings > Network': '系统设置 > 网络',
+        'TLS version.': 'TLS 版本。',
+        'TODAY': '今天',
+        'Take a Quick Tour': '快速浏览',
+        'Test Connectivity': '测试连接',
+        'Thank you for taking the time to provide feedback. We appreciate': '感谢您花时间提供反馈。我们非常感激',
+        'The CA Certificate will be exported to': 'CA 证书将导出到',
+        'The Network Extension is a more powerful way to capture network traffic.': '网络扩展是一种更强大的捕获网络流量的方式。',
+        'The data is decoded. Authentication scheme:': '数据已解码。身份验证方案：',
+        'The information being shown is as of the moment of capturing the request and the': '显示的信息是捕获请求时的信息，并且',
+        'The request used the HTTP CONNECT method - establishes a tunnel used for HTTPS traffic': '请求使用了 HTTP CONNECT 方法 - 建立用于 HTTPS 流量的隧道',
+        'The request used the POST method': '请求使用了 POST 方法',
+        'The response returned status code 300, 301, 302, 303 or 307 redirect': '响应返回了状态码 300、301、302、303 或 307 重定向',
+        'The response returned status code 401 Unauthorized': '响应返回了状态码 401 未授权',
+        'The response was a CSS file': '响应是一个 CSS 文件',
+        'The response was a Flash file': '响应是一个 Flash 文件',
+        'The response was a JSON file': '响应是一个 JSON 文件',
+        'The response was a JavaScript file': '响应是一个 JavaScript 文件',
+        'The response was a Silverlight file': '响应是一个 Silverlight 文件',
+        'The response was a font file': '响应是一个字体文件',
+        'The response was a server error': '响应是一个服务器错误',
+        'The response was a video file': '响应是一个视频文件',
+        'The response was an HTML file': '响应是一个 HTML 文件',
+        'The response was an XML file': '响应是一个 XML 文件',
+        'The response was an audio file': '响应是一个音频文件',
+        'The response was an image': '响应是一张图片',
+        'The session is modified by rules, which will result in changes to the sizes.': '会话已被规则修改，这将导致大小发生变化。',
+        'The session list count limit is disabled while AutoSave option is enabled.': '启用自动保存选项时，会话列表数量限制将被禁用。',
+        'The session was aborted by the client, Fiddler, or the Server': '会话被客户端、Fiddler 或服务器中止',
+        'The traffic capturing is controlled through the set of rules below.': '流量捕获通过以下规则集进行控制。',
+        'There are no IPs connected to this machine.': '没有 IP 连接到此计算机。',
+        'There is a CA Certificate on your Desktop.': '您的桌面上有一个 CA 证书。',
+        'There is at least one paused session in your selection. Please resume it to see information here.': '您的选择中至少有一个已暂停的会话。请恢复它以在此处查看信息。',
+        'There was a problem processing your payment and your subscription will be terminated.': '处理您的付款时出现问题，您的订阅将被终止。',
+        'This is our Home Page where you will be able to learn more about the main functionalities of Fiddler Everywhere and have quick access to features and other useful information. Happy debugging!': '这是我们的主页，您可以在这里了解更多关于 Fiddler Everywhere 的主要功能，并快速访问功能和其他有用信息。祝您调试愉快！',
+        'This message was removed by its sender.': '此消息已被发送者删除。',
+        'This option will launch a new, clean terminal instance, and route traffic only from this instance through Fiddler.': '此选项将启动一个新的、纯净的终端实例，并仅将此实例的流量通过 Fiddler 路由。',
+        'This will execute': '这将执行',
+        'This will revert changes to the last saved state.': '这将把更改还原到最后保存的状态。',
+        'Time interval': '时间间隔',
+        'Time tab': '时间选项卡',
+        'To capture traffic from other applications or frameworks, please refer to our': '要捕获来自其他应用程序或框架的流量，请参阅我们的',
+        'To continue using Fiddler, you need to reauthenticate with': '要继续使用 Fiddler，您需要重新验证',
+        'To enable HTTPS traffic, you need to trust the CA Certificate.': '要启用 HTTPS 流量，您需要信任 CA 证书。',
+        'To save a request, click on "Save" in the "Composer" tab': '要保存请求，请在"构建器"选项卡中点击"保存"',
+        'To save the captured sessions, click on "Save" in the "Live Traffic" tab': '要保存捕获的会话，请在"实时流量"选项卡中点击"保存"',
+        'To use the assistant, first connect a': '要使用助手，请先连接一个',
+        'Today': '今天',
+        'Toggle Calendar': '切换日历',
+        'Toggle calendar': '切换日历',
+        'Toggle options': '切换选项',
+        'Toggle popup': '切换弹出窗口',
+        'Toggle time list': '切换时间列表',
+        'Top toolbar': '顶部工具栏',
+        'Total': '总计',
+        'Trial Access Denied!': '拒绝试用访问！',
+        'Trust': '信任',
+        'Trust CA Certificate and enable HTTPS': '信任 CA 证书并启用 HTTPS',
+        'Trusted Root Certificate Authorities': '受信任的根证书颁发机构',
+        'Try Again.': '重试。',
+        'Try the following:': '尝试以下操作：',
+        'Type a message...': '输入消息...',
+        'Type a page number': '输入页码',
+        'Unable to Refresh Your Login': '无法刷新您的登录',
+        'Unable to Use Offline Mode': '无法使用离线模式',
+        'Unable to load release notes.': '无法加载发行说明。',
+        'Unable to load response.': '无法加载响应。',
+        'Unlock': '解锁',
+        'Unstick': '取消固定',
+        'Unsubscribe': '取消订阅',
+        'Updating!': '正在更新！',
+        'Upgrade': '升级',
+        'Upgrade to Gain Access': '升级以获取访问权限',
+        'Upgrading will take about a minute.': '升级大约需要一分钟。',
+        'Upload': '上传',
+        'Uploading content for a session in progress (the request is being sent to the server)': '正在上传会话内容（请求正在发送到服务器）',
+        'Uploading paused for session in progress': '会话上传已暂停',
+        'Uploading...': '上传中...',
+        'Use "{customValue}"': '使用 "{customValue}"',
+        'Use Rules to simulate conditions that might be difficult to replicate otherwise': '使用规则模拟否则难以复制的条件',
+        'VS Code': 'VS Code',
+        'Validity Period': '有效期',
+        'Version': '版本',
+        'Version:': '版本：',
+        'View All Notifications': '查看所有通知',
+        'View and inspect messages': '查看和检查消息',
+        'Visible': '可见',
+        'Voice input': '语音输入',
+        'We have detected': '我们已检测到',
+        'We have updated our end user license agreement. Please accept it to proceed.': '我们已更新最终用户许可协议。请接受以继续。',
+        'Web Address:': 'Web 地址：',
+        'Web Proxy (HTTP)': 'Web 代理（HTTP）',
+        'Welcome to Fiddler': '欢迎使用 Fiddler',
+        'Welcome to Fiddler Everywhere': '欢迎使用 Fiddler Everywhere',
+        'When AutoSave is enabled, this option will be disabled.': '启用自动保存时，此选项将被禁用。',
+        'When you use the extension for the first time, you will need to allow the extension in your settings. See the steps': '首次使用扩展时，您需要在设置中允许该扩展。查看步骤',
+        'Whitelist the Fiddler APIs:': '将 Fiddler API 加入白名单：',
+        'You are currently in': '您当前处于',
+        'You are successfully using the app with an': '您正在成功使用应用，使用',
+        'You are trying to sign in with': '您正在尝试使用以下账户登录',
+        'You are using Lite Plan.': '您正在使用 Lite 计划。',
+        'You can always download it using the "Shared Collections" option.': '您可以随时使用"共享集合"选项下载。',
+        'You can always download it using the "Shared Snapshots" option.': '您可以随时使用"共享快照"选项下载。',
+        'You can read more about it': '您可以阅读更多关于',
+        'You can submit a request to delete your Fiddler account and any personal data associated with it': '您可以提交请求以删除您的 Fiddler 账户和与之关联的任何个人数据',
+        'You can submit a request to unsubscribe from receiving future email communications from': '您可以提交请求以取消订阅来自以下地址的未来电子邮件通信',
+        'You can try again or read more about it': '您可以重试或阅读更多关于',
+        'You have the following upstream proxy set in OS settings:': '您在操作系统设置中设置了以下上游代理：',
+        'You have to capture sessions in order to save them.': '您必须先捕获会话才能保存它们。',
+        'You need to': '您需要',
+        'You need to authenticate again to keep using the application!': '您需要重新验证以继续使用应用！',
+        'You need to replace your Offline License file': '您需要替换您的离线许可证文件',
+        'You removed this message.': '您删除了此消息。',
+        'You will be logged out in:': '您将在以下时间后注销：',
+        'Your administrators have configured Fiddler with specific settings and restrictions:': '您的管理员已为 Fiddler 配置了特定的设置和限制：',
+        'Your admins have applied a configuration that restricts updating the assistant settings.': '您的管理员已应用限制更新助手设置的配置。',
+        'Your admins have applied a configuration that restricts updating the sanitization settings.': '您的管理员已应用限制更新清理设置的配置。',
+        'Your admins have applied a configuration that restricts using the Fiddler Assistant.': '您的管理员已应用限制使用 Fiddler 助手的配置。',
+        'Your admins have applied a configuration that restricts using the Fiddler MCP server.': '您的管理员已应用限制使用 Fiddler MCP 服务器的配置。',
+        'Your admins have applied a configuration to Fiddler': '您的管理员已为 Fiddler 应用了配置',
+        'Your default browser should open automatically. If': '您的默认浏览器应自动打开。如果',
+        'Your trial comes with expert-level dedicated support.': '您的试用附带专家级的专属支持。',
+        'll be able to modify or delete these rules as needed.': '在 Fiddler Everywhere 中，自动响应器被称为规则。您只能从 Fiddler Classic 导入已加载的自动响应规则到 Fiddler Everywhere。导入后，您将能够根据需要修改或删除这些规则。',
+        'll be able to remove it anytime you want in Settings.': '别担心，您可以随时在"设置"中将其移除。',
+        'll need to create one first - just click': '要将会话添加到快照，您需要先创建一个 - 只需点击',
+        'remove any opened and cached sessions': '删除所有打开和缓存的会话',
+        's Terms of Service and Privacy Policy.': '请求使用您自己的 API 密钥进行处理，并直接计费到您的 LLM 提供商账户。数据使用和保留遵循提供商的服务条款和隐私政策。',
+        's an error with the custom CA Certificate installed on your machine': '您机器上安装的自定义 CA 证书存在错误',
+        't Access Account!': '无法访问账户！',
+        't access this page:': '如果您无法访问此页面：',
+        't available in your': '此功能在您的',
+        't be used simultaneously.': '这是系统代理的替代方法，两者不能同时使用。',
+        't clear grid': '不清除网格',
+        't close the app.': '请不要关闭应用。',
+        't have a Telerik account, you need to create one with the SAME email you have used for Fiddler.': '如果您在 2022 年 11 月 8 日之前使用过 Fiddler，但没有 Telerik 账户，则需要使用与 Fiddler 相同的电子邮件创建一个账户。',
+        't have any saved Snapshots': '您没有任何已保存的快照',
+        't have any saved Snapshots yet.': '您还没有任何已保存的快照。',
+        't have any saved requests': '您没有任何已保存的请求',
+        't locate the CA Certificate inside it, go back to the previous step and download the certificate using your': '如果您在"设置"中找不到"已下载的描述文件"选项或无法在其中找到 CA 证书，请返回上一步并使用您的',
+        't normally send data through Fiddler.': '反向代理模式允许 Fiddler 捕获来自应用、服务器或设备的流量，无需依赖系统代理。通过将 Fiddler 配置为监听特定端口，它可在客户端与服务器之间充当中间人，从而让你能够查看来自各类工具、移动端应用或后端服务的流量 —— 这些流量通常不会经由 Fiddler 传输。',
+        't trust the CA Certificate, you will be able to capture only HTTP traffic with the proxy.': '请注意，如果您不信任 CA 证书，您将只能通过代理捕获 HTTP 流量。',
+        't trusted': '您机器上安装的自定义 CA 证书不受信任',
+        't verify your': '我们无法验证您的',
+        've set a limit for your sessions list count.': '您似乎已为会话列表数量设置了限制。',
+      },
+      regexp: {
+        'Timings \\((.*?)\\)': '时序 ({0})',
+        'Sizes \\((.*?)\\)': '大小 ({0})',
+        ' (\\d+) selected ': ' {0} 选中 ',
+        '(\\d+) days!': '{0} 天！',
+        'Hi (.*?)! You are logged in now.': '您好 {0}！您已登录。',
+        '(\\d+) days remaining': '剩余 {0} 天',
+        'Add (.*?) to Bypass List': '将 {0} 添加到绕过列表',
+        'Certificate Details: (.*?)': '证书详情: {0}',
+        'Overall \\((.*?)\\)': '整体 ({0})',
+        'Request \\((.*?)\\)': '请求 ({0})',
+        'Response \\((.*?)\\)': '响应 ({0})',
+        'Request: (.*?)': '请求：{0}',
+        'Response: (.*?)': '响应：{0}',
+        '(\\d+) matches in the current tab': '当前标签页中有 {0} 个匹配项',
+        'Zoom: (\\d+)%': '缩放: {0}%',
+      }
+    }
+  }
+  let currentDict = trnaslationData[lang]
+
+  class ReplaceText extends Text {
+    constructor(data) {
+      super(data)
+    }
+    get nodeValue() {
+      return super.nodeValue
+    }
+    set nodeValue(value) {
+      super.nodeValue = value
+      // 白名单翻译
+      if (this.parentElement?.className === 'ng-star-inserted'
+        || this.parentElement?.className === 'k-button-text'
+        || this.parentElement?.className === 'k-text-ellipsis'
+        || this.parentElement?.previousElementSibling?.dataset?.icon === 'autosave'
+        || (this.parentElement?.tagName === 'STRONG' && value === 'All Folders') // 保存请求时，显示的当前文件夹名称
+        || this.parentElement?.nextElementSibling?.attributes?.name?.value === 'circle-question' // 帮助提示
+        || value?.includes('matches in the current tab') // Rule匹配数
+        || this.parentElement?.className === 'k-input-value-text' // Rule条件匹配中选择框的当前选中项文字
+      ) {
+        translate(this);
+      }
+    }
+  }
+  /**
+   *  TODO: 改成是否全英文判断
+   * @param {*} str 
+   * @returns 
+   */
+  const containsFullChinese = (str) => {
+    // 匹配大多数汉字、繁体中文和部分中文标点
+    const fullChineseRegex = /[\u4e00-\u9FFF\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\uff01\u3010\u3011\uffe5]/;
+    return fullChineseRegex.test(str);
+  }
+  const isSkipEle = (ele) => {
+    // 忽略image
+    if (ele.nodeName === "IMG") return true;
+    // 忽略path
+    if (ele.nodeName === "path") return true;
+    // 忽略svg
+    if (ele.nodeName === "svg") return true;
+    // 忽略br
+    if (ele.nodeName === "BR") return true;
+    // 忽略source
+    if (ele.nodeName === "SOURCE") return true;
+    // 忽略rect
+    if (ele.nodeName === "rect") return true;
+    // 忽略circle
+    if (ele.nodeName === "circle") return true;
+    // 忽略script
+    if (ele.nodeName === "SCRIPT") return true;
+    if (
+      ele.nodeType === Node.ELEMENT_NODE && ele instanceof HTMLElement &&
+      (ele.className.includes("rule-title") // 规则列表
+        || ele?.parentElement?.parentElement?.parentElement?.parentElement?.classList?.contains('filter-list') // 过滤器列表
+      )
+    )
+      return true;
+    if (ele?.className?.includes('item-label')) {
+      if (!ele?.nextElementSibling) {
+        // 保存请求时选择文件夹名称，忽略
+        return true
+      }
+      const btn = ele?.nextElementSibling?.querySelector('[data-button-icon="trash"]')
+      if (btn && !btn.hidden) {
+        return true
+      }
+    }
+    if (ele.nodeType === Node.ELEMENT_NODE && ele instanceof HTMLElement && ele.className.includes('toolbar__menu-item')) {
+      if (ele.parentNode.parentElement.id && ele.parentElement.parentElement.firstElementChild.nextElementSibling.className.includes('k-separator')) {
+        return true;
+      }
+    }
+    if (
+      ele.textContent && 
+      (
+        /^\d+:\d+$/.test(ele.textContent)
+        || /^\d+\.\d+\.\d+$/.test(ele.textContent)
+        || /^\d+ \/ \d+$/.test(ele.textContent)
+        || /^(\d+)$/.test(ele.textContent)
+      )
+    ) return true
+  }
+  const getSingleNode = (node) => {
+    // element get
+    // console.info('getSingleNode:', node);
+    const eles = [node];
+    const result = [];
+    while (eles.length > 0) {
+      const ele = eles.pop();
+      if (!ele) continue;
+      if (isSkipEle(ele)) continue;
+      if (ele.hasChildNodes()) {
+        for (let i = 0; i < ele.childNodes.length; i++) {
+          const child = ele.childNodes[i];
+          if (isSkipEle(child)) continue;
+          eles.push(child);
+          if (child instanceof HTMLElement) {
+            const title = child.attributes.getNamedItem("title");
+            if (title && title.textContent && title.textContent.length > 0) {
+              result.push(title);
+            }
+            const placeholder = child.attributes.getNamedItem("placeholder");
+            if (placeholder && placeholder.textContent && placeholder.textContent.length > 0) {
+              result.push(placeholder);
+            }
+          }
+        }
+        continue;
+      }
+      // 单元素节点
+      if (!ele.textContent || ele.textContent.length === 0) continue;
+  
+      if (!isNaN(Number(ele.textContent))) continue
+      
+      result.push(ele);
+    } // end while
+    return result;
+  };
+  /** @param {Node} node */
+  const translate = (node) => {
+    if (!node.textContent) return false
+    // log.info('translate:', node.textContent);
+    if (!currentDict) return false
+    const key = node.textContent.trim()
+    const langText = currentDict.simple[key]
+    if (!langText) {
+      for (const [reg, text] of Object.entries(currentDict.regexp)) {
+        const regExp = new RegExp(reg, 'g')
+        if (regExp.test(node.textContent)) {
+          node.textContent = node.textContent.replace(regExp, (_ss, ...args) => {
+            let t = text
+            for (let i = 0; i < args.length; i++) {
+              t = t.replace(`{${i}}`, args[i])
+            }
+            // log.info('reg translation:', t)
+            return t
+          })
+          // log.info('reg trnslation result:', node.textContent)
+          return true
+        }
+      }
+      return false
+    }
+    // 使用replace，因为trim会把换行空格移除掉
+    node.textContent = node.textContent.replace(key, langText)
+    return true
+  };
+  window.switchLanguage = async (newLang) => {
+    if (newLang === lang) return;
+    document.body.setAttribute('lang', newLang)
+    currentDict = trnaslationData[newLang]
+    console.info("switchLanguage -> ", newLang);
+    lang = newLang;
+    for (const [node, keyword] of node2keyword.entries()) {
+      const r = translate(node)
+      if (!r) {
+        node.textContent = keyword
+      }
+    }
+  };
+
+  {
+    // 用于动态的“展开/收起”
+    // 这些元素直接更新nodeValue，不会触发Observer
+    document.createTextNode = (data) => {
+      return new ReplaceText(data)
+    }
+  };
+  const observer = new MutationObserver((mutations) => {
+    // console.info('[load]: MutationObserver', mutations);
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        mutation.addedNodes.forEach((node) => {
+          // console.info('added node:', node);
+          if (node.nodeType === Node.ELEMENT_NODE && node instanceof HTMLElement) {
+            // console.info('element text:', node.textContent);
+            const list = getSingleNode(node)
+            // console.info('list:', node, node.outerHTML, list, mutations)
+            for (const item of list) {
+              if (!item.textContent) continue
+              if (!node2keyword.has(item)) {
+                node2keyword.set(item, item.textContent);
+              } else if (!containsFullChinese(item.textContent) && node2keyword.get(item) !== item.textContent) {
+                node2keyword.set(item, item.textContent);
+              }
+              translate(item);
+            }
+          } else if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE && node instanceof ShadowRoot) {
+            const list = getSingleNode(node)
+            // console.info('list:', list)
+            for (const item of list) {
+              if (!item.textContent) continue
+              if (!node2keyword.has(item)) {
+                node2keyword.set(item, item.textContent);
+              } else if (!containsFullChinese(item.textContent) && node2keyword.get(item) !== item.textContent) {
+                node2keyword.set(item, item.textContent);
+              }
+              translate(item);
+            }
+            // 设置part，使css生效
+            for (let i=0; i < node.childNodes.length; i++) {
+              const child = node.childNodes[i]
+              if (!child) continue
+              if (child.nodeType === Node.ELEMENT_NODE && child instanceof HTMLElement && child.id) {
+                child.setAttribute('part', child.id)
+              }
+            }
+            // 每层都设置part导出
+            node.host?.setAttribute('exportparts', 'options')
+          } else if (node.nodeType === Node.TEXT_NODE) {
+            // console.info('text node:', node);
+            if (node.nodeValue.includes('Zoom:')) {
+              translate(node);
+            }
+          }
+        });
+      }
+    });
+  });
+  document.addEventListener('keyup', async (e) => {
+    // Ctrl + T
+    if (e.ctrlKey && (e.key === 't' || e.key === 'T')) {
+      console.info('按下 Ctrl + T 键')
+      document.getElementById('languageChangePanel')?.remove()
+      // const lang = await window.requestBackground('getStorage', {key: 'lang'}) || 'zh_CN'
+      const languageChangePanel = document.createElement('div')
+      languageChangePanel.id = 'languageChangePanel'
+      languageChangePanel.style.position = 'fixed'
+      languageChangePanel.style.bottom = '10px'
+      languageChangePanel.style.left = '10px'
+      languageChangePanel.style.backgroundColor = 'white'
+      languageChangePanel.style.padding = '10px'
+      languageChangePanel.style.border = '1px solid black'
+      languageChangePanel.style.zIndex = '10000'
+      languageChangePanel.innerHTML = `
+        <h3>Language:</h3>
+        <select id="languageSelect">
+          <option value="zhCn" ${lang === 'zhCn' ? 'selected' : ''}>简体中文</option>
+          <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+        </select>
+        <button id="languageChangeButton">OK</button>
+        <button id="closeLanguageChangePanel">X</button>
+      `
+      document.body.appendChild(languageChangePanel)
+      languageChangePanel.querySelector('#languageChangeButton').addEventListener('click', async () => {
+        const selectedLanguage = languageChangePanel.querySelector('#languageSelect').value
+        console.info('选择的语言:', selectedLanguage)
+        // await window.requestBackground('setStorage', {key: 'lang', value: selectedLanguage})
+        // window.biliBridgePc.callNativeSync('config/changeLanguage', selectedLanguage)
+        switchLanguage(selectedLanguage)
+        console.info('切换语言成功:', selectedLanguage)
+      })
+      languageChangePanel.querySelector('#closeLanguageChangePanel').addEventListener('click', () => {
+        document.body.removeChild(languageChangePanel)
+      })
+    }
+  })
+  if (!document.body) {
+    console.warn(
+      "MutationObserver: document.body is not ready yet, waiting for it to be available."
+    );
+    document.addEventListener("DOMContentLoaded", () => {
+      console.info(
+        "MutationObserver: document.body is now ready, starting to observe."
+      );
+      document.body.setAttribute('lang', lang)
+      document.head.insertAdjacentHTML('beforeend', `
+        <style>
+          /* 中文样式调整 */
+          [lang="zhCn"] #requestInspectorsPane .inspector-type-text, [lang="zhCn"] #responseInspectorsPane .inspector-type-text {
+            width: 9%;
+          }
+      `)
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: false,
+        characterData: true,
+      });
+    });
+    return;
+  }
+  console.info(
+    "MutationObserver: document.body is ready, starting to observe."
+  );
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+  });
+})();

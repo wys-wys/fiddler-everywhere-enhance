@@ -1,26 +1,24 @@
 # [耻辱柱（Hall of Shame)](./shame.md)
 
----
+# Download Link
 
-# Get Latest Version of Fiddler Everywhere
+## Latest Version
 
-  - ### Linux - https://api.getfiddler.com/linux/latest-linux
+| Platform | Link |
+|----------|-------|
+| Linux | https://api.getfiddler.com/linux/latest-linux |
+| Windows | https://api.getfiddler.com/win/latest |
+| Mac(Intel) | https://api.getfiddler.com/mac/latest-mac |
+| Mac(Arm64) | https://api.getfiddler.com/mac-arm64/latest-mac|
 
-  - ### Windows - https://api.getfiddler.com/win/latest
+## Old Versions
 
-  - ### Mac
-    - ### Intel - https://api.getfiddler.com/mac/latest-mac
-    - ### Arm64 - https://api.getfiddler.com/mac-arm64/latest-mac
-
-# Get Old Versions of Fiddler Everywhere
-  
-  - ### Linux - https://downloads.getfiddler.com/linux/fiddler-everywhere-[version].AppImage
-
-  - ### Windows - https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20[version].exe
-  
-  - ### Mac
-     - ### Intel - <br>https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg
-     - ### Arm64 - <br>https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg
+| Platform | Link |
+|----------|-------|
+| Linux | https://downloads.getfiddler.com/linux/fiddler-everywhere-[version].AppImage |
+| Windows | https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20[version].exe |
+| Mac(Intel)| https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg |
+| Mac(Arm64) | https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg |
 
   > [!NOTE]
   > In the above links replace `[version]` with the version you want to download <br>
@@ -37,14 +35,19 @@
   >  - If you're using Fiddler Everywhere 5.16.0 or earlier, look for `libfiddler.dll` instead of `fiddler.dll`.
   >  - In version 5.17.0 and later, it was renamed to `fiddler.dll`.
 
---- 
-
-## Windows
+---
 
 > [!TIP]
->  ## You may patch Fiddler Everywhere Automatically too! - [Patch Automatically](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
+>  ## [Auto Patch Tool](https://github.com/msojocs/fiddler-everywhere-enhance/releases)
+>  ## [You Can Patch Fiddler Everywhere Automatically for Windows & Linux!](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
 
-### Patch Manually: 
+## Auto Tool
+
+1. Download AutoTool from [release](https://github.com/msojocs/fiddler-everywhere-enhance/releases).
+2. Run `fe-tool.exe -version latest` for windows or `fe-tool -version latest` for linux.
+3. When the tool is done, the output will be available in `FiddlerEverywhere`.
+
+## Windows
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
 2. Go to https://github.com/project-yui/Yui-patch/releases
@@ -55,8 +58,6 @@
 6. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
 7. Modify file `main.js` as instructed below.
 8. Copy `server/file` -> `Fiddler/resources/app/out/file`
-
-  ---
 
 ## Linux
 
@@ -70,8 +71,6 @@
 
 > [!NOTE]
 > You may need to recompile `libfiddler.so` by yourself.
-
-  ---
 
 ## Mac 
 
@@ -87,6 +86,8 @@
 
 > [!NOTE]
 > You may need to recompile `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) by yourself.
+> 
+> You may need to run the command: `sudo codesign -s "-" --deep --force --verbose /Applications/Fiddler\ Everywhere.app`. [issue#96](https://github.com/msojocs/fiddler-everywhere-enhance/issues/96#issuecomment-2814035393)
 
   ---
 
@@ -94,8 +95,6 @@
 
 1. Open `resources/app/out/main.js` in a text editor
 2. Open & copy content of `server/index.js` & append to `resources/app/out/main.js` at the begining.
-
-  ---
 
 # Change **First Name**, **Last Name** & **Email** (Additional)
 If you want to change default `first & last names` and `email`, you can edit, `resources/app/out/file/identity.getfiddler.com/oauth/token.json`. 
@@ -119,12 +118,23 @@ If you want to change default `first & last names` and `email`, you can edit, `r
         }
       }
     ```
-  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values.
+  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values. You can also change `country` and `provider`.
 
 > [!TIP]
 > You may need to sign out and sign again after changing these values.
 
+> [!CAUTION]
+> - If you change email of above `token.json`, Fiddler Everywhere consider that it's a new user and your "Saved Snapshots" will be unavailable to new user (new email).
+> - If you want to get those snapshots back, you'll have to change the email back.
+> - Changing `firstname`, `lastname`, `country`, `provider` won't affect.
+
 ---
+
+# 多语言支持
+
+默认不支持，若要支持中文，请将`server/translate.js`复制到`resources\app\out\translate.js`
+
+按<kbd>Ctrl+T</kbd>切换语言。
 
 # Some Extra Information
 
@@ -133,6 +143,13 @@ If you want to change default `first & last names` and `email`, you can edit, `r
 [Let me see old old](./old/DETAIL.MD)
 
 ---
+
+# Other
+
+本项目 CDN 加速及安全防护由 Tencent EdgeOne 赞助：EdgeOne 提供长期有效的免费套餐，包含不限量的流量和请求，覆盖中国大陆节点，且无任何超额收费，感兴趣的朋友可以点击下面的链接领取。
+
+[亚洲最佳CDN、边缘和安全解决方案 - Tencent EdgeOne](https://edgeone.ai/zh?from=github)
+[![](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/zh?from=github)
 
 ## 免责声明
 	

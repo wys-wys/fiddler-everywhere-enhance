@@ -24,7 +24,7 @@ const port = 5678;
       console.info('Match result:', match)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
-      const exp = new RegExp(`http://127.0.0.1:${port}/`, 'g')
+      const exp = new RegExp(`http://127\\.0\\.0\\.1:\\d+/`, 'g')
       mainXJs = mainXJs.replace(exp, 'https://')
       fs.writeFileSync(mainXJsPath, mainXJs)
     }
@@ -51,6 +51,11 @@ const port = 5678;
           options.frame = false
           if (options.webPreferences) {
             options.webPreferences.devTools = true
+            const p = path.resolve(__dirname, './translate.js')
+            if (fs.existsSync(p)) {
+              // 如果存在translate.js文件，则使用它
+              options.webPreferences.preload = p
+            }
           }
         }
         console.info('HookedBrowserWindow:', options)
@@ -122,6 +127,7 @@ const port = 5678;
     return originloadURL.apply(this, args)
   };
 })();
+// Server
 (async () => {
   const http = require('http')
   const path = require('path')
